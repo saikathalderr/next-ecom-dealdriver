@@ -8,7 +8,7 @@ import Link from "next/link";
 function Header() {
   return (
     <div className="navbar bg-base-100 shadow">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-40">
         <div className="flex-1">
           <Logo />
         </div>

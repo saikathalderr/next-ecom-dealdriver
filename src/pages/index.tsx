@@ -1,8 +1,9 @@
 import Head from "next/head";
+import Products from "~/components/Product/Products";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  // const { data: products, isLoading } = api.product.getAll.useQuery();
+  const { data: products, isLoading, isError } = api.product.getAll.useQuery();
 
   return (
     <>
@@ -10,7 +11,15 @@ export default function Home() {
         <title>shopee - find electronics at best price</title>
         <meta name="description" content="find electronics at best price" />
       </Head>
-      <main className="container mx-auto"></main>
+      <main>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : isError ? (
+          <p>Error</p>
+        ) : (
+          <Products products={products} />
+        )}
+      </main>
     </>
   );
 }
