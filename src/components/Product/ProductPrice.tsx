@@ -11,7 +11,7 @@ function ProductPrice(props: ProductPriceProps) {
     ? price - (price * discountPercentage) / 100
     : price;
 
-  const language = navigator.language || "en-US";
+  const language = "en-US";
 
   const formattedFinalPrice = new Intl.NumberFormat(language, {
     style: "currency",
@@ -24,16 +24,21 @@ function ProductPrice(props: ProductPriceProps) {
   }).format(price);
 
   return (
-    <div className="items-center justify-center font-bold">
-      <span> {formattedFinalPrice}</span>
+    <div className="font-bold">
+      <div className="pb-2">
+        {discountPercentage && (
+          <PriceDiscount discountPercentage={discountPercentage} />
+        )}
+      </div>
+      <span className="font-black text-primary-content">
+        {formattedFinalPrice}
+      </span>
       {discountPercentage && (
         <>
           <span className="px-1"></span>
           <span className="text-xs text-gray-400 line-through">
             {formatttedRegularPrice}
           </span>
-          <span className="px-1"></span>
-          <PriceDiscount discountPercentage={discountPercentage} />
         </>
       )}
     </div>
