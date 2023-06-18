@@ -1,16 +1,19 @@
 import { createServerSideHelpers } from "@trpc/react-query/server";
+import { useRouter } from "next/router";
 import Products from "~/components/Product/Products";
 import Head from "next/head";
 import SuperJSON from "superjson";
-import type { InferGetServerSidePropsType } from "next";
+import type { NextPageContext, InferGetServerSidePropsType } from "next";
 
 import { api } from "~/utils/api";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
 import ProductsSkeleton from "~/components/Product/ProductsSkeleton";
+import Pagination from "~/components/common/Pagination";
 import { Suspense } from "react";
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: NextPageContext) {
+  const ssrPage = Number(context?.query?.page) || 1;
   const helpers = createServerSideHelpers({
     router: appRouter,
     ctx: {
@@ -18,7 +21,9 @@ export async function getServerSideProps() {
     },
     transformer: SuperJSON,
   });
-  await helpers.product.getAll.prefetch();
+  await helpers.product.getAll.prefetch({
+    page: ssrPage,
+  });
   return {
     props: {
       trpcState: helpers.dehydrate(),
@@ -29,10 +34,26 @@ export async function getServerSideProps() {
 export default function Home(
   _props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-  const { data: products, isError } = api.product.getAll.useQuery();
-  if (isError || !products) {
-    return <div>error</div>;
+  const router = useRouter();
+  const page = Number(router.query.page) || 1;
+
+  const { data, isLoading, isError, error, refetch } =
+    api.product.getAll.useQuery({ page });
+  if (isError) {
+    return <div>{error.message}</div>;
   }
+  if (isLoading) {
+    return <ProductsSkeleton />;
+  }
+
+  function handlePageChange(page: number) {
+    void router.replace({
+      query: { ...router.query, page },
+    });
+    void refetch();
+  }
+
+  const { products, pagination } = data;
   return (
     <>
       <Head>
@@ -43,6 +64,7 @@ export default function Home(
         <Suspense fallback={<ProductsSkeleton />}>
           <Products products={products} />
         </Suspense>
+        <Pagination data={pagination} onPageChange={handlePageChange} />
       </main>
     </>
   );

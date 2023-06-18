@@ -38,7 +38,7 @@ function Product(props: ProductProps) {
         <div className="flex text-xs font-light uppercase text-base-content">
           <span>{category}</span>
         </div>
-        <h2 className="text-base font-semibold text-primary-content">
+        <h2 className="text-base font-semibold capitalize text-primary-content">
           {title}
         </h2>
         <div>

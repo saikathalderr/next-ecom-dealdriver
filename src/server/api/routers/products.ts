@@ -1,11 +1,36 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { z } from "zod";
 import { decodeSlug } from "~/utils";
+import { z } from "zod";
 
 export const productRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.product.findMany();
-  }),
+  getAll: publicProcedure
+    .input(
+      z.object({
+        page: z.number().optional().default(1),
+      })
+    )
+    .query(async (opts) => {
+      const { input } = opts;
+      const { page } = input;
+      const limit = 20;
+      const skip = (page - 1) * limit;
+
+      const products = await opts.ctx.prisma.product.findMany({
+        skip,
+        take: limit,
+      });
+      const total = await opts.ctx.prisma.product.count();
+      const totalPages = Math.ceil(total / limit);
+      const pagination = {
+        page,
+        totalPages,
+        total,
+      };
+      return {
+        products,
+        pagination,
+      };
+    }),
   getOne: publicProcedure
     .input(
       z.object({
