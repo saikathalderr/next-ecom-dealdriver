@@ -13,8 +13,11 @@ function Header() {
           <Logo />
         </div>
         <div className="flex-none">
-          <Link href={"/cart"}>
-            <button className="btn-ghost btn-circle btn">
+          <Link href={"/cart"} aria-label="cart-button">
+            <button
+              className="btn-ghost btn-circle btn"
+              aria-label="cart-button"
+            >
               <FontAwesomeIcon icon={faBagShopping} size="1x" />
             </button>
           </Link>

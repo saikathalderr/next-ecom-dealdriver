@@ -36,7 +36,7 @@ function ProductPrice(props: ProductPriceProps) {
       {discountPercentage && (
         <>
           <span className="px-1"></span>
-          <span className="text-xs text-gray-400 line-through">
+          <span className="text-xs text-gray-500 line-through">
             {formatttedRegularPrice}
           </span>
         </>
