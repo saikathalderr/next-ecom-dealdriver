@@ -19,4 +19,12 @@ model Product {
     category           String
     thumbnail          String
     images             String[]
+    Cart               Cart[]
+}
+
+model Cart {
+    id        Int     @id @default(autoincrement())
+    productId Int
+    quantity  Int
+    product   Product @relation(fields: [productId], references: [id])
 }
