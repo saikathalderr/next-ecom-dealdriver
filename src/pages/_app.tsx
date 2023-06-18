@@ -9,7 +9,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <Header />
-      <div className="container mx-auto px-10 py-10 md:px-0 lg:px-40">
+      <div className="container mx-auto px-3 py-3 md:py-10 lg:px-40">
         <Component {...pageProps} />
       </div>
     </>

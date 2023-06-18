@@ -20,7 +20,7 @@ function Product(props: ProductProps) {
   return (
     <div className="card card-compact w-full border border-base-200 bg-base-100 shadow">
       <Link href={slug}>
-        <figure className="relative h-32 w-full lg:h-40">
+        <figure className="relative h-28 w-full lg:h-40">
           <Image
             fill
             priority

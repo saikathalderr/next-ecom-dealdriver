@@ -10,7 +10,7 @@ type ProductsProps = {
 function Products(props: ProductsProps) {
   const { products } = props;
   return (
-    <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
       {products.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}

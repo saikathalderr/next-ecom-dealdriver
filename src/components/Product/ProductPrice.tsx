@@ -26,21 +26,25 @@ function ProductPrice(props: ProductPriceProps) {
   return (
     <div className="font-bold">
       <div className="pb-2">
-        {discountPercentage && (
-          <PriceDiscount discountPercentage={discountPercentage} />
-        )}
+        <span>
+          {discountPercentage && (
+            <PriceDiscount discountPercentage={discountPercentage} />
+          )}
+        </span>
+        <span>
+          {discountPercentage && (
+            <>
+              <span className="px-1"></span>
+              <span className="text-xs text-gray-500 line-through">
+                {formatttedRegularPrice}
+              </span>
+            </>
+          )}
+        </span>
       </div>
-      <span className="font-black text-primary-content">
+      <span className="text-base font-black text-primary-content">
         {formattedFinalPrice}
       </span>
-      {discountPercentage && (
-        <>
-          <span className="px-1"></span>
-          <span className="text-xs text-gray-500 line-through">
-            {formatttedRegularPrice}
-          </span>
-        </>
-      )}
     </div>
   );
 }
