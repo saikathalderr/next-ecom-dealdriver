@@ -24,9 +24,7 @@ function Header() {
               ) : totalCartItem === 0 ? (
                 <span>0</span>
               ) : (
-                <span className="countdown">
-                  <span style={{ "--value": totalCartItem }}></span>
-                </span>
+                <span className="countdown">{totalCartItem}</span>
               )}
             </span>
             <Link href={"/cart"} aria-label="cart-button">
