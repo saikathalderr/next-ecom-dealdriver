@@ -83,4 +83,8 @@ export const cartRouter = createTRPCRouter({
       });
       return cart;
     }),
+  clearCart: publicProcedure.mutation(async (opts) => {
+    const cart = await opts.ctx.prisma.cart.deleteMany();
+    return cart;
+  }),
 });

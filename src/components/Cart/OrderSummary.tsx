@@ -5,10 +5,11 @@ type OrderSummaryProps = {
   tax: number;
   orderTotal: number;
   taxRate: number;
+  checkout: JSX.Element;
 };
 
 function OrderSummary(props: OrderSummaryProps) {
-  const { subTotal, tax, orderTotal, taxRate } = props;
+  const { subTotal, tax, orderTotal, taxRate, checkout } = props;
   return (
     <div className="card-body order-1 h-fit rounded-xl py-6 shadow-xl lg:sticky lg:top-40 lg:order-2 ">
       <h1 className="text-lg font-bold">Order Summary</h1>
@@ -26,9 +27,7 @@ function OrderSummary(props: OrderSummaryProps) {
           <span>Order Total</span> <Price price={orderTotal} />
         </p>
       </div>
-      <div>
-        <button className="btn-primary btn-block btn">checkout</button>
-      </div>
+      <div>{checkout}</div>
     </div>
   );
 }
