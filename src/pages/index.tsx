@@ -1,6 +1,6 @@
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { useRouter } from "next/router";
-import Products from "~/components/Product/Products";
+import Products from "~/components/product/Products";
 import Head from "next/head";
 import SuperJSON from "superjson";
 import type { NextPageContext, InferGetServerSidePropsType } from "next";
@@ -8,9 +8,10 @@ import type { NextPageContext, InferGetServerSidePropsType } from "next";
 import { api } from "~/utils/api";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
-import ProductsSkeleton from "~/components/Product/ProductsSkeleton";
+import ProductsSkeleton from "~/components/skeleton/ProductsSkeleton";
 import Pagination from "~/components/common/Pagination";
 import { Suspense } from "react";
+import Error from "next/error";
 
 export async function getServerSideProps(context: NextPageContext) {
   const ssrPage = Number(context?.query?.page) || 1;
@@ -39,9 +40,7 @@ export default function Home(
 
   const { data, isLoading, isError, error, refetch } =
     api.product.getAll.useQuery({ page });
-  if (isError) {
-    return <div>{error.message}</div>;
-  }
+  if (isError) return <Error statusCode={500} title={error.message} />;
   if (isLoading) {
     return <ProductsSkeleton />;
   }

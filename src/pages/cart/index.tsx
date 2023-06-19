@@ -1,15 +1,17 @@
+import Error from "next/error";
 import Head from "next/head";
 import React from "react";
-import CartItems from "~/components/Cart/CartItems";
-import EmptyCart from "~/components/Cart/EmptyCart";
-import OrderSummary from "~/components/Cart/OrderSummary";
+import CartItems from "~/components/cart/CartItems";
+import CartSkeleton from "~/components/skeleton/CartSkeleton";
+import EmptyCart from "~/components/cart/EmptyCart";
+import OrderSummary from "~/components/cart/OrderSummary";
 import { api } from "~/utils/api";
 
 const taxRate = 9; // 9%
 
 function Cart() {
   const { data: data, isLoading, error, isError } = api.cart.getAll.useQuery();
-  if (!data) return null;
+  if (!data || isLoading) return <CartSkeleton />;
   const { cart } = data;
 
   const subTotal = cart.reduce((acc, item) => {
@@ -18,6 +20,8 @@ function Cart() {
 
   const tax = (subTotal * taxRate) / 100;
   const orderTotal = subTotal + tax;
+
+  if (isError) return <Error statusCode={500} title={error.message} />;
 
   return (
     <>

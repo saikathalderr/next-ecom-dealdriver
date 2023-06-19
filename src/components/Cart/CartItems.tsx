@@ -13,10 +13,7 @@ function CartItems(props: CartItemsProps) {
   return (
     <div className="order-2 grid grid-cols-1 gap-5 lg:order-1">
       {cart.map((item) => (
-        <>
-          <CartItem key={item.id} item={item} />
-          <hr className="my-0" />
-        </>
+        <CartItem key={item.id} item={item} />
       ))}
     </div>
   );

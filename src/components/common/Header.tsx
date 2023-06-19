@@ -1,14 +1,14 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { api } from "~/utils/api";
 
 import Logo from "./Logo";
 import Link from "next/link";
+import HeaderSkeleton from "../skeleton/HeaderSkeleton";
 
 function Header() {
-  const { data, isError, error, isLoading } = api.cart.getAll.useQuery();
-  if (!data) return <span>No data</span>;
+  const { data, isLoading } = api.cart.getAll.useQuery();
+  if (!data || isLoading) return <HeaderSkeleton />;
   const { totalCartItem } = data;
   return (
     <div className="navbar sticky top-0 z-10 bg-base-100 shadow">
@@ -21,6 +21,8 @@ function Header() {
             <span className="badge badge-primary badge-sm indicator-start indicator-item font-bold">
               {isLoading ? (
                 <span className="loading loading-bars loading-xs"></span>
+              ) : totalCartItem === 0 ? (
+                <span>0</span>
               ) : (
                 <span className="countdown">
                   <span style={{ "--value": totalCartItem }}></span>

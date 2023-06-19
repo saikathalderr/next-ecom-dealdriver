@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 
@@ -16,25 +17,29 @@ function Product(props: ProductProps) {
   const { thumbnail, title, rating, category, price, discountPercentage, id } =
     product;
 
-  const {
-    mutate: addToCart,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = api.cart.addToCart.useMutation();
+  const { mutate: addToCart, isLoading } = api.cart.addToCart.useMutation();
+
   const { refetch: refetchCartCount } = api.cart.getAll.useQuery();
 
   const handleAddToCart = () => {
-    addToCart({
-      productId: id,
-      quantity: 1,
-    });
+    addToCart(
+      {
+        productId: id,
+        quantity: 1,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Product added to cart", {
+            icon: "🤘🏻",
+          });
+          void refetchCartCount();
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   };
-
-  if (isSuccess) {
-    void refetchCartCount();
-  }
 
   return (
     <div className="card-compact card w-full border border-base-200 bg-base-100 shadow">

@@ -2,10 +2,11 @@ import type { Cart, Product } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import Price from "../common/Price";
-import QtySelector from "./QtySelector";
+import QtySelector from "../skeleton/QtySelector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { api } from "~/utils/api";
+import { toast } from "react-hot-toast";
 
 type CartItemProps = {
   item: Cart & {
@@ -18,37 +19,47 @@ function CartItem(props: CartItemProps) {
   const { product, quantity, id } = item;
   const { title, price, thumbnail } = product;
 
-  const {
-    mutate: updateCart,
-    isLoading,
-    error,
-    isError,
-    isSuccess: isSuccessUpdatingCart,
-  } = api.cart.updateCart.useMutation();
+  const { mutate: updateCart } = api.cart.updateCart.useMutation();
 
-  const {
-    mutate: deleteFromCart,
-    isLoading: isDeleting,
-    error: deleteError,
-    isError: isDeleteError,
-    isSuccess: isSuccessDeleting,
-  } = api.cart.deleteFromCart.useMutation();
+  const { mutate: deleteFromCart } = api.cart.deleteFromCart.useMutation();
 
   const { refetch } = api.cart.getAll.useQuery();
 
   const handleQtyChange = (qty: number) => {
-    updateCart({ id, quantity: qty });
+    updateCart(
+      { id, quantity: qty },
+      {
+        onSuccess: () => {
+          void refetch();
+          toast.success("Item qty updated", {
+            icon: "🌈",
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   };
 
   const handleDelete = () => {
-    deleteFromCart({
-      id,
-    });
+    deleteFromCart(
+      {
+        id,
+      },
+      {
+        onSuccess: () => {
+          void refetch();
+          toast.success("Deleted item from cart", {
+            icon: "🥲",
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   };
-
-  if (isSuccessUpdatingCart || isSuccessDeleting) {
-    void refetch();
-  }
 
   return (
     <div className="flex items-center justify-start gap-5 rounded-2xl bg-base-100">
