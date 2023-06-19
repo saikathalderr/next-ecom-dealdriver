@@ -1,3 +1,4 @@
+import Price from "../common/Price";
 import PriceDiscount from "./PriceDiscount";
 
 type ProductPriceProps = {
@@ -11,17 +12,8 @@ function ProductPrice(props: ProductPriceProps) {
     ? price - (price * discountPercentage) / 100
     : price;
 
-  const language = "en-US";
-
-  const formattedFinalPrice = new Intl.NumberFormat(language, {
-    style: "currency",
-    currency: "USD",
-  }).format(finalPrice);
-
-  const formatttedRegularPrice = new Intl.NumberFormat(language, {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
+  const formattedFinalPrice = <Price price={finalPrice} />;
+  const formatttedRegularPrice = <Price price={price} />;
 
   return (
     <div className="font-bold">
