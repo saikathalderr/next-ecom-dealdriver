@@ -1,17 +1,16 @@
 import { createServerSideHelpers } from "@trpc/react-query/server";
-import { useRouter } from "next/router";
-import Products from "~/components/Product/Products";
-import Head from "next/head";
-import SuperJSON from "superjson";
 import type { NextPageContext, InferGetServerSidePropsType } from "next";
-
-import { api } from "~/utils/api";
+import Error from "next/error";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { Suspense } from "react";
+import SuperJSON from "superjson";
+import Products from "~/components/Product/Products";
+import Pagination from "~/components/common/Pagination";
+import ProductsSkeleton from "~/components/skeleton/ProductsSkeleton";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
-import ProductsSkeleton from "~/components/skeleton/ProductsSkeleton";
-import Pagination from "~/components/common/Pagination";
-import { Suspense } from "react";
-import Error from "next/error";
+import { api } from "~/utils/api";
 
 export async function getServerSideProps(context: NextPageContext) {
   const ssrPage = Number(context?.query?.page) || 1;

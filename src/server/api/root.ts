@@ -1,8 +1,7 @@
-import { createTRPCRouter } from "~/server/api/trpc";
-
 import { cartRouter } from "./routers/cart";
-import { productRouter } from "./routers/products";
 import { orderRouter } from "./routers/order";
+import { productRouter } from "./routers/products";
+import { createTRPCRouter } from "~/server/api/trpc";
 
 export const appRouter = createTRPCRouter({
   product: productRouter,

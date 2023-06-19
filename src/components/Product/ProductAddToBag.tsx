@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type ProductAddToBagProps = {
   onBagClick: () => void;
@@ -14,7 +14,7 @@ function ProductAddToBag(props: ProductAddToBagProps) {
       disabled={loading}
       onClick={onBagClick}
     >
-      {loading ? "Adding to bag..." : "Add to bag"}
+      {loading ? "Adding..." : "Add to bag"}
       {loading ? (
         <span className="loading loading-spinner loading-xs"></span>
       ) : (

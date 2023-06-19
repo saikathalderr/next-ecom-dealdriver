@@ -1,12 +1,12 @@
+import Price from "../common/Price";
+import QtySelector from "../skeleton/QtySelector";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Cart, Product } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import Price from "../common/Price";
-import QtySelector from "../skeleton/QtySelector";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
+import { api } from "~/utils/api";
 
 type CartItemProps = {
   item: Cart & {
@@ -19,9 +19,11 @@ function CartItem(props: CartItemProps) {
   const { product, quantity, id } = item;
   const { title, price, thumbnail } = product;
 
-  const { mutate: updateCart } = api.cart.updateCart.useMutation();
+  const { mutate: updateCart, isLoading: updatingItemInCart } =
+    api.cart.updateCart.useMutation();
 
-  const { mutate: deleteFromCart } = api.cart.deleteFromCart.useMutation();
+  const { mutate: deleteFromCart, isLoading: deletingItemFromCart } =
+    api.cart.deleteFromCart.useMutation();
 
   const { refetch } = api.cart.getAll.useQuery();
 
@@ -81,11 +83,16 @@ function CartItem(props: CartItemProps) {
         <div className="flex items-center gap-5">
           <Price price={price} />
           <div className="flex-grow"></div>
-          <QtySelector quantity={quantity} onQtyChange={handleQtyChange} />
+          <QtySelector
+            quantity={quantity}
+            onQtyChange={handleQtyChange}
+            disabled={updatingItemInCart || deletingItemFromCart}
+          />
           <button
             className="btn-ghost btn-circle btn text-red-500"
             aria-label="delete-button"
             onClick={handleDelete}
+            disabled={updatingItemInCart || deletingItemFromCart}
           >
             <FontAwesomeIcon icon={faTrash} size="1x" />
           </button>

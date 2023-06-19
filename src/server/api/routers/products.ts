@@ -1,6 +1,6 @@
+import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { decodeSlug } from "~/utils";
-import { z } from "zod";
 
 export const productRouter = createTRPCRouter({
   getAll: publicProcedure

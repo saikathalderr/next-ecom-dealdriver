@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
-import { api } from "~/utils/api";
-
-import Logo from "./Logo";
-import Link from "next/link";
 import HeaderSkeleton from "../skeleton/HeaderSkeleton";
+import Logo from "./Logo";
+import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import { api } from "~/utils/api";
 
 function Header() {
   const { data, isLoading } = api.cart.getAll.useQuery();

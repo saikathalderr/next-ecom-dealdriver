@@ -1,5 +1,5 @@
-import { prisma } from "~/server/db";
 import axios from "axios";
+import { prisma } from "~/server/db";
 
 interface Product {
   id: number;

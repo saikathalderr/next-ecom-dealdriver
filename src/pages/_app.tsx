@@ -1,11 +1,9 @@
-import { type AppType } from "next/app";
-import { api } from "~/utils/api";
-import "~/styles/globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-
+import { type AppType } from "next/app";
 import { Toaster } from "react-hot-toast";
-
 import Header from "~/components/common/Header";
+import "~/styles/globals.css";
+import { api } from "~/utils/api";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (

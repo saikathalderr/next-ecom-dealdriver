@@ -1,6 +1,6 @@
-import React from "react";
 import CartItem from "./CartItem";
 import type { Cart, Product } from "@prisma/client";
+import React from "react";
 
 type CartItemsProps = {
   cart: (Cart & {
