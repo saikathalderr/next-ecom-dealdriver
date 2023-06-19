@@ -1,6 +1,6 @@
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { useRouter } from "next/router";
-import Products from "~/components/product/Products";
+import Products from "~/components/Product/Products";
 import Head from "next/head";
 import SuperJSON from "superjson";
 import type { NextPageContext, InferGetServerSidePropsType } from "next";

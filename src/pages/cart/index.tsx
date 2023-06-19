@@ -1,10 +1,10 @@
 import Error from "next/error";
 import Head from "next/head";
 
-import CartItems from "~/components/cart/CartItemList";
+import CartItems from "~/components/Cart/CartItemList";
 import CartSkeleton from "~/components/skeleton/CartSkeleton";
-import EmptyCart from "~/components/cart/Empty";
-import OrderSummary from "~/components/cart/CartSummary";
+import EmptyCart from "~/components/Cart/Empty";
+import OrderSummary from "~/components/Cart/CartSummary";
 import { api } from "~/utils/api";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
