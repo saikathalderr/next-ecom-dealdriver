@@ -7,7 +7,9 @@ import Logo from "./Logo";
 import Link from "next/link";
 
 function Header() {
-  const { data: total, isError, error, isLoading } = api.cart.count.useQuery();
+  const { data, isError, error, isLoading } = api.cart.getAll.useQuery();
+  if (!data) return <span>No data</span>;
+  const { totalCartItem } = data;
   return (
     <div className="navbar sticky top-0 z-10 bg-base-100 shadow">
       <div className="container mx-auto px-10 py-2 md:px-0 lg:px-40">
@@ -21,7 +23,7 @@ function Header() {
                 <span className="loading loading-bars loading-xs"></span>
               ) : (
                 <span className="countdown">
-                  <span style={{ "--value": total }}></span>
+                  <span style={{ "--value": totalCartItem }}></span>
                 </span>
               )}
             </span>

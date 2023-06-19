@@ -23,7 +23,7 @@ function Product(props: ProductProps) {
     error,
     isSuccess,
   } = api.cart.addToCart.useMutation();
-  const { refetch: refetchCartCount } = api.cart.count.useQuery();
+  const { refetch: refetchCartCount } = api.cart.getAll.useQuery();
 
   const handleAddToCart = () => {
     addToCart({
@@ -37,7 +37,7 @@ function Product(props: ProductProps) {
   }
 
   return (
-    <div className="card card-compact w-full border border-base-200 bg-base-100 shadow">
+    <div className="card-compact card w-full border border-base-200 bg-base-100 shadow">
       <figure className="relative h-28 w-full lg:h-40">
         <Image
           fill
