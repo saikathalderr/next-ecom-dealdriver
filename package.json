@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy": "npm run postinstall && prisma migrate deploy && npm run db-seed && npm run build",
+    "deploy": "npm run postinstall && prisma db push && npm run db-seed && npm run build",
     "build": "next build",
     "dev": "next dev",
     "postinstall": "prisma generate",
