@@ -1,5 +1,5 @@
 import Price from "../common/Price";
-import QtySelector from "../Product/QtySelector";
+import QtySelector from "../common/QtySelector";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Cart, Product } from "@prisma/client";
